@@ -24,7 +24,7 @@ describe('News Letter', () => {
         cy.get('div > p').contains('Thanks for signing up!');
     });
 
-    it.only('should display validation errors', () => {
+    it('should display validation errors', () => {
 
         // Intercept any http request 
         cy.intercept('POST', '/newsletter*', {message: 'Email exists already'}).as('subscribe');
@@ -41,6 +41,19 @@ describe('News Letter', () => {
 
         // Error message appears
         cy.contains('Email exists already');
+    });
+
+    it.only('should successfully create a new contact', () => {
+
+        cy.request({
+            method: 'POST',
+            url: '/newsletter',
+            body: {email: 'test1@example.com'},
+            form: true
+        }).then(res => {
+            expect(res.status).to.eq(201);
+        });
+
     });
 
 });
