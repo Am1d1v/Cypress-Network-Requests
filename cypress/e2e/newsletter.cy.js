@@ -24,4 +24,23 @@ describe('News Letter', () => {
         cy.get('div > p').contains('Thanks for signing up!');
     });
 
+    it.only('should display validation errors', () => {
+
+        // Intercept any http request 
+        cy.intercept('POST', '/newsletter*', {message: 'Email exists already'}).as('subscribe');
+        cy.visit('/');
+
+        // Select email input field then insert dummy email data
+        cy.get('[data-cy="newsletter-email"]').should('not.have.attr', 'disabled')
+        cy.get('[data-cy="newsletter-email"]').click().type('testemail@gmail.com');
+
+        // Click on "Sign Up" button
+        cy.get('[data-cy="newsletter-submit"]').click()     
+        
+        cy.wait('@subscribe');
+
+        // Error message appears
+        cy.contains('Email exists already');
+    });
+
 });
