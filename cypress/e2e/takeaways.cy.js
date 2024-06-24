@@ -10,6 +10,7 @@ describe('Takeaways', () => {
   });
 
   it.only('should add a new takeaway', () => {
+    cy.intercept('POST', '/takeaways/new', 'success').as('createTakeaway');
     // To create a new takeaway user must be logged in
     // Logging in
     cy.login();
@@ -28,7 +29,9 @@ describe('Takeaways', () => {
     // Select "Create" button and click it
     cy.get('[data-cy="create-takeaway"]').click();
 
-    // Check that new takeaway aws added
+    cy.wait('@createTakeaway').its('request.body').should('match', /Test+Takeaway+Title.*Test+Takeaway+Description/);
+
+    // Check that new takeaway was added
     cy.get('[data-cy="takeaway-item"]').should('have.length.above', 3);
   });
 
