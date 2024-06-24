@@ -36,6 +36,23 @@
 //   }
 // }
 
+// Logging In custom command
+Cypress.Commands.add('login', () => {
+        cy.visit('/login');
+        
+        // Loggin in
+        // Select email input field and type email
+        cy.get('[data-cy="auth-email"]').click();
+        cy.get('[data-cy="auth-email"]').type('test@example.com');
+
+        // Select password input field and type password
+        cy.get('[data-cy="auth-password"]').click();
+        cy.get('[data-cy="auth-password"]').type('testpassword');
+
+        // Select "Login" button and click it
+        cy.get('[data-cy="auth-submit"]').click();
+});
+
 
 // the below code snippet is required to handle a React hydration bug that would cause tests to fail
 // it's only a workaround until this React behavior / bug is fixed

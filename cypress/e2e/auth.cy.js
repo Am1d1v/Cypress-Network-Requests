@@ -47,20 +47,11 @@ describe('Authentication', () => {
     });
 
     it.only('should logout', () => {
-        cy.visit('//login');
-
+        
         // Loggin in
-        // Select email input field and type email
-        cy.get('[data-cy="auth-email"]').click();
-        cy.get('[data-cy="auth-email"]').type('test@example.com');
+       cy.login();
 
-        // Select password input field and type password
-        cy.get('[data-cy="auth-password"]').click();
-        cy.get('[data-cy="auth-password"]').type('testpassword');
-
-        // Select "Login" button and click it
-        cy.get('[data-cy="auth-submit"]').click();
-
+        // Logout
         // Select log out button and click it
         cy.contains('Logout').click();
 
