@@ -2,6 +2,10 @@
 
 describe('Authentication', () => {
 
+    beforeEach(() => {
+        cy.task('seedDatabase');
+    });
+
     it('should sign up', () => {
         cy.visit('/signup');
 
@@ -15,6 +19,11 @@ describe('Authentication', () => {
 
         // Select "Create Account" button and click it
         cy.get('[data-cy="auth-submit"]').click();
+
+        // After successed sign up user redirected to /takeaways
+        cy.location('pathname').should('eq', '/takeaways');
+
+        cy.getCookie('__session').its('value').should('not.be.empty');
     });
 
 });
