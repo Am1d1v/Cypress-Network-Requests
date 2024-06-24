@@ -46,7 +46,7 @@ describe('Authentication', () => {
         cy.getCookie('__session').its('value').should('not.be.empty');
     });
 
-    it.only('should logout', () => {
+    it('should logout', () => {
         
         // Loggin in
        cy.login();
